@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% block title %}Admin Panel – EstimateNG{% endblock %}
+
+{% block content %}
+<section class="py-5">
+  <div class="container">
+
+    <div class="d-flex align-items-center justify-content-between mb-4">
+      <h1 class="font-slab fw-bold page-title mb-0">
+        <i class="bi bi-gear-fill me-2 text-primary"></i>Administration Panel
+      </h1>
+      <a href="{{ url_for('admin_logout') }}" class="btn btn-outline-danger">
+        <i class="bi bi-box-arrow-right me-1"></i>Logout
+      </a>
+    </div>
+
+    <div class="row g-4">
+
+      <!-- Left Column: Model Info + Actions -->
+      <div class="col-lg-4">
+
+        <!-- Model Performance Summary -->
+        <div class="card shadow-sm mb-4">
+          <div class="card-header fw-semibold bg-primary text-white">
+            <i class="bi bi-robot me-2"></i>Deployed Model
+          </div>
+          <div class="card-body">
+            {% if metrics %}
+              <p><strong>Best Model:</strong> {{ metrics.best_model }}</p>
+              <p><strong>Training Date:</strong> {{ metrics.training_date }}</p>
+              <p><strong>Dataset Size:</strong> {{ metrics.dataset_size }} records</p>
+              <p><strong>Version:</strong> {{ metrics.model_version }}</p>
+              {% if metrics.model_comparison %}
+                <hr>
+                <h6 class="fw-bold">Model Comparison (Test Set)</h6>
+                <div class="table-responsive">
+                  <table class="table table-sm table-bordered">
+                    <thead><tr><th>Model</th><th>R²</th><th>MAPE</th></tr></thead>
+                    <tbody>
+                      {% for name, m in metrics.model_comparison.items() %}
+                      <tr {% if name == metrics.best_model %}class="table-success fw-bold"{% endif %}>
+                        <td>{{ name }}</td>
+                        <td>{{ m.R2 }}</td>
+                        <td>{{ m.MAPE }}%</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              {% endif %}
+            {% else %}
+              <p class="text-muted">No model metrics found. Run training first.</p>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="card shadow-sm mb-4">
+          <div class="card-header fw-semibold">
+            <i class="bi bi-wrench-adjustable me-2"></i>Actions
+          </div>
+          <div class="card-body">
+            <form action="{{ url_for('admin_retrain') }}" method="POST" class="mb-3"
+              onsubmit="return confirm('Retrain the model now? This may take a few minutes.')">
+              <button type="submit" class="btn btn-primary w-100">
+                <i class="bi bi-play-circle me-2"></i>Retrain Model
+              </button>
+            </form>
+            <form action="{{ url_for('admin_upload') }}" method="POST"
+              enctype="multipart/form-data">
+              <label for="dataset" class="form-label fw-semibold">Upload New Dataset (CSV)</label>
+              <div class="input-group">
+                <input type="file" class="form-control" id="dataset" name="dataset" accept=".csv" required>
+                <button type="submit" class="btn btn-outline-primary">Upload</button>
+              </div>
+              <div class="form-text">Upload a CSV matching the training dataset schema.</div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Recent Predictions -->
+      <div class="col-lg-8">
+        <div class="card shadow-sm">
+          <div class="card-header fw-semibold">
+            <i class="bi bi-list-columns-reverse me-2"></i>Recent Predictions
+            <span class="badge bg-secondary ms-2">{{ predictions|length }}</span>
+          </div>
+          <div class="card-body p-0">
+            {% if predictions %}
+            <div class="table-responsive">
+              <table class="table table-hover mb-0 small">
+                <thead class="table-light">
+                  <tr>
+                    <th>Timestamp</th>
+                    <th>Neighbourhood</th>
+                    <th>Type</th>
+                    <th>Area&nbsp;(m²)</th>
+                    <th>Beds</th>
+                    <th>Predicted Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for p in predictions %}
+                  <tr>
+                    <td class="text-muted">{{ p.timestamp[:16].replace('T',' ') }}</td>
+                    <td>{{ p.input.neighbourhood }}</td>
+                    <td>{{ p.input.property_type }}</td>
+                    <td>{{ p.input.sqft_living }}</td>
+                    <td>{{ p.input.bedrooms }}</td>
+                    <td class="fw-bold text-primary">
+                      ₦{{ "{:,.0f}".format(p.predicted_price) }}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            {% else %}
+              <div class="p-4 text-center text-muted">
+                <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                No predictions have been made yet.
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /row -->
+  </div><!-- /container -->
+</section>
+{% endblock %}
