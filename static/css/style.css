@@ -1,0 +1,227 @@
+/* =====================================================
+   EstimateNG – Real Estate Price Prediction System
+   Custom stylesheet – Chapter 3 §3.12 colour scheme:
+   Primary: #1F3864 (deep blue)  | White: #FFFFFF
+   Accent:  #F5A623 (amber)      | Light grey: #F5F5F5
+   ===================================================== */
+
+/* ── Global ── */
+:root {
+  --primary:   #1F3864;
+  --primary-lt:#2B4FA0;
+  --accent:    #F5A623;
+  --accent-lt: #FFD085;
+  --grey-bg:   #F5F5F5;
+  --text-muted:#6c757d;
+  --border:    #dee2e6;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #fff;
+  color: #212529;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.font-slab { font-family: 'Roboto Slab', serif; }
+
+/* ── Navbar ── */
+#mainNavbar {
+  background: var(--primary);
+  box-shadow: 0 2px 8px rgba(0,0,0,.25);
+  padding: .75rem 0;
+}
+#mainNavbar .navbar-brand {
+  font-family: 'Roboto Slab', serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: .3px;
+}
+#mainNavbar .nav-link { color: rgba(255,255,255,.82); font-weight: 500; }
+#mainNavbar .nav-link:hover,
+#mainNavbar .nav-link.active { color: #fff; }
+
+/* ── Hero ── */
+.hero-section {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-lt) 100%);
+  min-height: 560px;
+  padding: 80px 0 60px;
+}
+.text-accent { color: var(--accent-lt) !important; }
+.opacity-90   { opacity: .9; }
+
+.badge-accent {
+  background: rgba(245,166,35,.15);
+  color: var(--accent-lt);
+  border: 1px solid rgba(245,166,35,.4);
+  border-radius: 50px;
+}
+
+.btn-accent {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #212529;
+  font-weight: 700;
+  border-radius: 50px;
+  transition: all .2s;
+}
+.btn-accent:hover {
+  background: var(--accent-lt);
+  border-color: var(--accent-lt);
+  color: #212529;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245,166,35,.4);
+}
+
+.hero-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 16px 48px rgba(0,0,0,.22);
+  min-width: 280px;
+}
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+.stat-row:last-of-type { border-bottom: none; }
+.stat-label { color: var(--text-muted); font-size: .9rem; }
+.stat-val { font-weight: 700; color: var(--primary); }
+
+/* ── Section Titles ── */
+.section-title { color: var(--primary); }
+.page-title    { color: var(--primary); font-size: 1.9rem; }
+
+/* ── Feature Cards ── */
+.feature-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: transform .25s, box-shadow .25s;
+}
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(31,56,100,.12);
+}
+.feature-icon {
+  width: 64px;
+  height: 64px;
+  background: rgba(31,56,100,.08);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  font-size: 1.75rem;
+  color: var(--primary);
+}
+
+/* ── How it Works steps ── */
+.step-circle {
+  width: 64px;
+  height: 64px;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Roboto Slab', serif;
+}
+
+/* ── Model Performance Table ── */
+.table-primary-header th {
+  background: var(--primary);
+  color: #fff;
+  font-weight: 600;
+}
+.model-table { font-size: .93rem; }
+
+/* ── Prediction Form ── */
+.form-section {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.form-section-header {
+  background: var(--primary);
+  color: #fff;
+  padding: .75rem 1.25rem;
+  font-weight: 600;
+  font-size: 1rem;
+}
+.form-section-body {
+  background: #fff;
+  padding: 1.25rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--primary-lt);
+  box-shadow: 0 0 0 .2rem rgba(43,79,160,.2);
+}
+
+.btn-primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  border-radius: 50px;
+  transition: all .2s;
+}
+.btn-primary:hover {
+  background: var(--primary-lt);
+  border-color: var(--primary-lt);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(31,56,100,.3);
+}
+
+.amenity-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--grey-bg);
+  height: 100%;
+}
+
+/* ── Result Cards ── */
+.result-price-card {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-lt) 100%);
+  color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(31,56,100,.25);
+}
+.price-display {
+  font-size: 2.8rem;
+  color: var(--accent-lt);
+  letter-spacing: -1px;
+}
+.confidence-band {
+  background: rgba(255,255,255,.1);
+  display: inline-block;
+  padding: 6px 18px;
+  border-radius: 50px;
+  font-size: .9rem;
+}
+
+/* ── Admin table ── */
+.table th, .table td { vertical-align: middle; }
+
+/* ── Footer ── */
+.footer {
+  background: var(--primary);
+  color: rgba(255,255,255,.7);
+  margin-top: auto;
+}
+.footer strong { color: #fff; }
+
+/* ── Utilities ── */
+.card { border-radius: 12px; }
+.card-header { border-radius: 12px 12px 0 0 !important; }
+
+/* ── Responsive tweaks ── */
+@media (max-width: 767.98px) {
+  .hero-section { min-height: auto; padding: 50px 0 40px; }
+  .price-display { font-size: 2rem; }
+}

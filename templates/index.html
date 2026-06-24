@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+{% block title %}EstimateNG – AI-Powered Property Valuation{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="hero-section d-flex align-items-center">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-7 text-white" data-aos="fade-right">
+        <span class="badge badge-accent mb-3 px-3 py-2 fs-6">
+          <i class="bi bi-cpu me-1"></i> Machine Learning Powered
+        </span>
+        <h1 class="display-4 fw-bold font-slab mb-3">
+          Accurate Property<br>Price Estimates<br>
+          <span class="text-accent">in Seconds</span>
+        </h1>
+        <p class="lead mb-4 opacity-90">
+          EstimateNG uses an ensemble of Random Forest and XGBoost algorithms
+          trained on thousands of Nigerian residential property transactions to
+          deliver data-driven valuations — objective, transparent, and free.
+        </p>
+        <div class="d-flex gap-3 flex-wrap">
+          <a href="{{ url_for('predict_page') }}" class="btn btn-accent btn-lg px-5 py-3 fw-semibold">
+            <i class="bi bi-calculator me-2"></i>Get a Price Estimate
+          </a>
+          <a href="#how-it-works" class="btn btn-outline-light btn-lg px-5 py-3">
+            How It Works
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-5 d-none d-lg-flex justify-content-center mt-5 mt-lg-0">
+        <div class="hero-card p-4">
+          <div class="text-center mb-3">
+            <i class="bi bi-houses-fill text-primary" style="font-size: 3rem;"></i>
+          </div>
+          <div class="stat-row mb-2">
+            <span class="stat-label">Avg Lagos (Lekki Ph1)</span>
+            <span class="stat-val">₦187M</span>
+          </div>
+          <div class="stat-row mb-2">
+            <span class="stat-label">Avg Abuja (Maitama)</span>
+            <span class="stat-val">₦312M</span>
+          </div>
+          <div class="stat-row mb-2">
+            <span class="stat-label">Avg Port Harcourt GRA</span>
+            <span class="stat-val">₦125M</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Avg Surulere (Lagos)</span>
+            <span class="stat-val">₦38M</span>
+          </div>
+          <p class="text-muted small text-center mt-3 mb-0">*Estimated averages for 3-bedroom properties</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5 bg-white" id="features">
+  <div class="container">
+    <div class="row text-center mb-5">
+      <div class="col-12">
+        <h2 class="font-slab fw-bold section-title">Why EstimateNG?</h2>
+        <p class="text-muted lead">Bridging the gap in Nigerian real estate valuation</p>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="feature-card h-100 text-center p-4">
+          <div class="feature-icon mb-3">
+            <i class="bi bi-lightning-charge-fill"></i>
+          </div>
+          <h5 class="fw-bold font-slab">Instant Results</h5>
+          <p class="text-muted">Get a price estimate in under 2 seconds. No waiting for an appraiser appointment or days for a report.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card h-100 text-center p-4">
+          <div class="feature-icon mb-3">
+            <i class="bi bi-shield-check-fill"></i>
+          </div>
+          <h5 class="fw-bold font-slab">Data-Driven Accuracy</h5>
+          <p class="text-muted">Trained on thousands of property transactions across Lagos, Abuja, and Port Harcourt with R² &gt; 0.88.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card h-100 text-center p-4">
+          <div class="feature-icon mb-3">
+            <i class="bi bi-transparency"></i>
+          </div>
+          <h5 class="fw-bold font-slab">Transparent Explanations</h5>
+          <p class="text-muted">Every estimate comes with a feature importance chart showing exactly which factors drove the valuation.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card h-100 text-center p-4">
+          <div class="feature-icon mb-3">
+            <i class="bi bi-cash-coin"></i>
+          </div>
+          <h5 class="fw-bold font-slab">Completely Free</h5>
+          <p class="text-muted">No registration, no fees. Traditional appraisals can cost 0.25–0.5% of property value. Ours costs nothing.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card h-100 text-center p-4">
+          <div class="feature-icon mb-3">
+            <i class="bi bi-phone-fill"></i>
+          </div>
+          <h5 class="fw-bold font-slab">Mobile Friendly</h5>
+          <p class="text-muted">Fully responsive design works seamlessly on smartphones, tablets, and desktops.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card h-100 text-center p-4">
+          <div class="feature-icon mb-3">
+            <i class="bi bi-graph-up-arrow"></i>
+          </div>
+          <h5 class="fw-bold font-slab">Confidence Intervals</h5>
+          <p class="text-muted">Receive a predicted price plus a 90% confidence range to understand the uncertainty in the estimate.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section class="py-5 bg-light" id="how-it-works">
+  <div class="container">
+    <div class="row text-center mb-5">
+      <h2 class="font-slab fw-bold section-title">How It Works</h2>
+      <p class="text-muted lead">Three simple steps to your property estimate</p>
+    </div>
+    <div class="row g-4 justify-content-center">
+      <div class="col-md-4 text-center">
+        <div class="step-circle mx-auto mb-3">1</div>
+        <h5 class="fw-bold font-slab">Enter Property Details</h5>
+        <p class="text-muted">Fill in the location, size, bedrooms, bathrooms, amenities, and year built using our intuitive form.</p>
+      </div>
+      <div class="col-md-4 text-center">
+        <div class="step-circle mx-auto mb-3">2</div>
+        <h5 class="fw-bold font-slab">ML Model Analyses</h5>
+        <p class="text-muted">Our trained ensemble model applies feature engineering and runs inference to compute the optimal price estimate.</p>
+      </div>
+      <div class="col-md-4 text-center">
+        <div class="step-circle mx-auto mb-3">3</div>
+        <h5 class="fw-bold font-slab">Receive Your Estimate</h5>
+        <p class="text-muted">Get the predicted price in Naira, confidence bounds, and an explanation chart — all instantly on-screen.</p>
+      </div>
+    </div>
+    <div class="text-center mt-5">
+      <a href="{{ url_for('predict_page') }}" class="btn btn-primary btn-lg px-5 py-3 fw-semibold">
+        <i class="bi bi-play-circle me-2"></i>Try It Now
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Model Performance Section -->
+<section class="py-5 bg-white">
+  <div class="container">
+    <div class="row text-center mb-4">
+      <h2 class="font-slab fw-bold section-title">Model Performance</h2>
+      <p class="text-muted lead">Comparative evaluation of four machine learning algorithms</p>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover model-table mx-auto" style="max-width:750px;">
+        <thead class="table-primary-header">
+          <tr>
+            <th>Algorithm</th>
+            <th>R² Score</th>
+            <th>MAE</th>
+            <th>MAPE</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Linear Regression</td>
+            <td>~0.72</td>
+            <td>₦14.2M</td>
+            <td>~19%</td>
+            <td><span class="badge bg-secondary">Baseline</span></td>
+          </tr>
+          <tr>
+            <td>Decision Tree</td>
+            <td>~0.78</td>
+            <td>₦10.5M</td>
+            <td>~16%</td>
+            <td><span class="badge bg-info text-dark">Evaluated</span></td>
+          </tr>
+          <tr>
+            <td>Random Forest</td>
+            <td>~0.88</td>
+            <td>₦6.1M</td>
+            <td>~11%</td>
+            <td><span class="badge bg-success">Selected</span></td>
+          </tr>
+          <tr class="table-success fw-bold">
+            <td>XGBoost <i class="bi bi-star-fill text-warning"></i></td>
+            <td>~0.91</td>
+            <td>₦5.2M</td>
+            <td>~9%</td>
+            <td><span class="badge bg-primary">Best Model</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-muted text-center small mt-2">
+      * Performance evaluated on a 20% holdout test set with 10-fold cross-validation.
+        Actual metrics vary with dataset and training run.
+    </p>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,271 @@
+{% extends "base.html" %}
+{% block title %}Get Property Estimate – EstimateNG{% endblock %}
+
+{% block extra_head %}
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<section class="py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-9">
+
+        <div class="text-center mb-5">
+          <h1 class="font-slab fw-bold page-title">Property Price Estimator</h1>
+          <p class="text-muted lead">Enter your property details below to receive an instant AI-powered valuation.</p>
+        </div>
+
+        <!-- ─── Prediction Form ─── -->
+        <form id="predictionForm" novalidate>
+
+          <!-- Section 1: Location Details -->
+          <div class="form-section mb-4">
+            <div class="form-section-header">
+              <i class="bi bi-geo-alt-fill me-2"></i>Location Details
+            </div>
+            <div class="form-section-body">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="neighbourhood" class="form-label fw-semibold">
+                    Neighbourhood / City Area <span class="text-danger">*</span>
+                  </label>
+                  <select class="form-select" id="neighbourhood" name="neighbourhood" required>
+                    <option value="" disabled selected>Select neighbourhood…</option>
+                    <optgroup label="Lagos – Premium">
+                      <option value="Victoria Island">Victoria Island</option>
+                      <option value="Ikoyi">Ikoyi</option>
+                      <option value="Banana Island">Banana Island</option>
+                      <option value="Lekki Phase 1">Lekki Phase 1</option>
+                      <option value="Lekki Phase 2">Lekki Phase 2</option>
+                    </optgroup>
+                    <optgroup label="Lagos – Mid-High">
+                      <option value="Ajah">Ajah</option>
+                      <option value="Gbagada">Gbagada</option>
+                      <option value="Magodo">Magodo</option>
+                    </optgroup>
+                    <optgroup label="Lagos – Standard">
+                      <option value="Surulere">Surulere</option>
+                      <option value="Yaba">Yaba</option>
+                      <option value="Ikeja">Ikeja</option>
+                      <option value="Ogba">Ogba</option>
+                    </optgroup>
+                    <optgroup label="Abuja – Premium">
+                      <option value="Maitama">Maitama</option>
+                      <option value="Asokoro">Asokoro</option>
+                      <option value="Wuse 2">Wuse 2</option>
+                      <option value="Jabi">Jabi</option>
+                    </optgroup>
+                    <optgroup label="Abuja – Standard">
+                      <option value="Garki">Garki</option>
+                      <option value="Gwarinpa">Gwarinpa</option>
+                      <option value="Kubwa">Kubwa</option>
+                      <option value="Lugbe">Lugbe</option>
+                    </optgroup>
+                    <optgroup label="Port Harcourt">
+                      <option value="GRA Phase 1">GRA Phase 1</option>
+                      <option value="GRA Phase 2">GRA Phase 2</option>
+                      <option value="Trans Amadi">Trans Amadi</option>
+                      <option value="Rumuola">Rumuola</option>
+                      <option value="Diobu">Diobu</option>
+                      <option value="Eleme">Eleme</option>
+                    </optgroup>
+                  </select>
+                  <div class="form-text">Select the closest neighbourhood to your property.</div>
+                  <div class="invalid-feedback">Please select a neighbourhood.</div>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="property_type" class="form-label fw-semibold">
+                    Property Type <span class="text-danger">*</span>
+                  </label>
+                  <select class="form-select" id="property_type" name="property_type" required>
+                    <option value="" disabled selected>Select type…</option>
+                    {% for pt in property_types %}
+                    <option value="{{ pt }}">{{ pt }}</option>
+                    {% endfor %}
+                  </select>
+                  <div class="form-text">Choose the category that best describes the property.</div>
+                  <div class="invalid-feedback">Please select a property type.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2: Property Specifications -->
+          <div class="form-section mb-4">
+            <div class="form-section-header">
+              <i class="bi bi-building me-2"></i>Property Specifications
+            </div>
+            <div class="form-section-body">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="sqft_living" class="form-label fw-semibold">
+                    Total Floor Area (m²) <span class="text-danger">*</span>
+                  </label>
+                  <input type="number" class="form-control" id="sqft_living" name="sqft_living"
+                    min="10" max="2000" placeholder="e.g. 250" required>
+                  <div class="form-text">Interior living area in square metres (10 – 2,000 m²).</div>
+                  <div class="invalid-feedback">Enter a valid floor area between 10 and 2,000 m².</div>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="yr_built" class="form-label fw-semibold">
+                    Year of Construction <span class="text-danger">*</span>
+                  </label>
+                  <input type="number" class="form-control" id="yr_built" name="yr_built"
+                    min="1900" max="2025" placeholder="e.g. 2018" required>
+                  <div class="form-text">Year the property was originally built (1900 – 2025).</div>
+                  <div class="invalid-feedback">Enter a valid year between 1900 and 2025.</div>
+                </div>
+
+                <div class="col-md-4">
+                  <label for="bedrooms" class="form-label fw-semibold">
+                    Bedrooms <span class="text-danger">*</span>
+                  </label>
+                  <input type="number" class="form-control" id="bedrooms" name="bedrooms"
+                    min="1" max="20" placeholder="e.g. 4" required>
+                  <div class="form-text">1 – 20 bedrooms.</div>
+                  <div class="invalid-feedback">Enter 1 – 20 bedrooms.</div>
+                </div>
+
+                <div class="col-md-4">
+                  <label for="bathrooms" class="form-label fw-semibold">
+                    Bathrooms <span class="text-danger">*</span>
+                  </label>
+                  <input type="number" class="form-control" id="bathrooms" name="bathrooms"
+                    min="1" max="15" placeholder="e.g. 3" required>
+                  <div class="form-text">1 – 15 bathrooms.</div>
+                  <div class="invalid-feedback">Enter 1 – 15 bathrooms.</div>
+                </div>
+
+                <div class="col-md-4">
+                  <label for="parking_spaces" class="form-label fw-semibold">
+                    Car Parking Spaces <span class="text-danger">*</span>
+                  </label>
+                  <input type="number" class="form-control" id="parking_spaces" name="parking_spaces"
+                    min="0" max="10" placeholder="e.g. 2" required>
+                  <div class="form-text">0 – 10 parking spaces.</div>
+                  <div class="invalid-feedback">Enter 0 – 10 parking spaces.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 3: Additional Features -->
+          <div class="form-section mb-4">
+            <div class="form-section-header">
+              <i class="bi bi-stars me-2"></i>Additional Features & Amenities
+            </div>
+            <div class="form-section-body">
+              <div class="row g-3">
+                <div class="col-sm-4">
+                  <div class="amenity-card p-3">
+                    <div class="form-check form-switch d-flex align-items-center gap-2">
+                      <input class="form-check-input" type="checkbox" id="has_pool" name="has_pool" role="switch">
+                      <label class="form-check-label fw-semibold" for="has_pool">
+                        <i class="bi bi-water me-1 text-primary"></i>Swimming Pool
+                      </label>
+                    </div>
+                    <p class="small text-muted mt-1 mb-0">Property has a dedicated swimming pool.</p>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="amenity-card p-3">
+                    <div class="form-check form-switch d-flex align-items-center gap-2">
+                      <input class="form-check-input" type="checkbox" id="is_gated" name="is_gated" role="switch">
+                      <label class="form-check-label fw-semibold" for="is_gated">
+                        <i class="bi bi-shield-lock-fill me-1 text-primary"></i>Gated Estate
+                      </label>
+                    </div>
+                    <p class="small text-muted mt-1 mb-0">Located within a secured, gated community.</p>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="amenity-card p-3">
+                    <div class="form-check form-switch d-flex align-items-center gap-2">
+                      <input class="form-check-input" type="checkbox" id="has_gym" name="has_gym" role="switch">
+                      <label class="form-check-label fw-semibold" for="has_gym">
+                        <i class="bi bi-bicycle me-1 text-primary"></i>Gym / Fitness
+                      </label>
+                    </div>
+                    <p class="small text-muted mt-1 mb-0">Has an on-site gym or fitness facility.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="d-flex gap-3 justify-content-center">
+            <button type="submit" class="btn btn-primary btn-lg px-5 py-3 fw-semibold" id="submitBtn">
+              <span class="btn-text"><i class="bi bi-calculator me-2"></i>Get Price Estimate</span>
+              <span class="btn-loading d-none">
+                <span class="spinner-border spinner-border-sm me-2" role="status"></span>Analysing…
+              </span>
+            </button>
+            <button type="button" class="btn btn-outline-secondary btn-lg px-4 py-3" id="resetBtn">
+              <i class="bi bi-arrow-counterclockwise me-2"></i>Reset
+            </button>
+          </div>
+        </form>
+
+        <!-- ─── Results Card ─── -->
+        <div id="resultsContainer" class="mt-5 d-none">
+          <hr class="my-4">
+          <h3 class="font-slab fw-bold text-center mb-4">
+            <i class="bi bi-graph-up me-2 text-primary"></i>Prediction Results
+          </h3>
+
+          <!-- Price Card -->
+          <div class="result-price-card text-center p-4 mb-4">
+            <p class="text-muted mb-1 fs-5">Estimated Property Value</p>
+            <h2 class="price-display fw-bold font-slab" id="predictedPrice">—</h2>
+            <div class="confidence-band mt-2">
+              <i class="bi bi-bar-chart-steps me-1"></i>
+              90% Confidence Range:
+              <strong id="confLower">—</strong> to <strong id="confUpper">—</strong>
+            </div>
+          </div>
+
+          <!-- Feature Importance Chart -->
+          <div class="card shadow-sm">
+            <div class="card-header fw-semibold">
+              <i class="bi bi-bar-chart-fill me-2"></i>Top Factors Influencing This Estimate
+            </div>
+            <div class="card-body">
+              <p class="text-muted small mb-3">
+                The chart below shows the relative contribution of each input attribute
+                to the predicted price. Longer bars indicate greater influence.
+              </p>
+              <div style="position:relative; height:320px;">
+                <canvas id="importanceChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- New Prediction Button -->
+          <div class="text-center mt-4">
+            <button id="newPredictionBtn" class="btn btn-outline-primary px-4">
+              <i class="bi bi-plus-circle me-2"></i>Make Another Estimate
+            </button>
+          </div>
+        </div>
+
+        <!-- ─── Error Container ─── -->
+        <div id="errorContainer" class="alert alert-danger mt-4 d-none" role="alert">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i>
+          <strong>Validation Error:</strong>
+          <ul id="errorList" class="mb-0 mt-1"></ul>
+        </div>
+
+      </div><!-- /col -->
+    </div><!-- /row -->
+  </div><!-- /container -->
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% endblock %}

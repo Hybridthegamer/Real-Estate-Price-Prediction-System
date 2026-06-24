@@ -1,0 +1,49 @@
+{
+  "best_model": "XGBoost",
+  "model_comparison": {
+    "Linear Regression": {
+      "MAE": 11926475.13,
+      "RMSE": 16640296.4,
+      "R2": 0.9518,
+      "MAPE": 39.3,
+      "cv_r2_mean": 0.9487,
+      "cv_r2_std": 0.0076,
+      "cv_mae_mean": 12834594.51,
+      "cv_rmse_mean": 18126194.89
+    },
+    "Decision Tree": {
+      "MAE": 15239989.12,
+      "RMSE": 30398767.21,
+      "R2": 0.8392,
+      "MAPE": 27.06,
+      "cv_r2_mean": 0.8977,
+      "cv_r2_std": 0.0264,
+      "cv_mae_mean": 14434007.39,
+      "cv_rmse_mean": 25546158.62
+    },
+    "Random Forest": {
+      "MAE": 11326171.8,
+      "RMSE": 24582380.84,
+      "R2": 0.8948,
+      "MAPE": 17.16,
+      "cv_r2_mean": 0.9275,
+      "cv_r2_std": 0.0264,
+      "cv_mae_mean": 11087800.21,
+      "cv_rmse_mean": 21411981.76
+    },
+    "XGBoost": {
+      "MAE": 9171486.92,
+      "RMSE": 19039025.03,
+      "R2": 0.9369,
+      "MAPE": 14.05,
+      "cv_r2_mean": 0.955,
+      "cv_r2_std": 0.0128,
+      "cv_mae_mean": 9254814.43,
+      "cv_rmse_mean": 16967998.38
+    }
+  },
+  "training_date": "2026-06-24 10:40",
+  "dataset_size": 2665,
+  "feature_count": 19,
+  "model_version": "XGBoost_v1"
+}
